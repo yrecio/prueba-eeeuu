@@ -125,7 +125,7 @@
         async function actualizarGrafico() {
             try {
                 const [metadatos, datos] = await Promise.all([
-                    fetch('https://file.epdata.es/biblioteca/18/metadatos.json').then(response => response.json()),
+                    fetch('metadatos.json').then(response => response.json()),
                     fetch('https://static01-europapress-net.s3.eu-west-1.amazonaws.com/imagenes/estaticos/elecciones/eeuu/2024.json').then(response => response.json())
                 ]);
 
