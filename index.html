@@ -1,8 +1,18 @@
+<html>
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafico</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
     <style>
         #grafico-principal {
             width: 100%;
             height: 1600px;
+            font-family: 'Lucida Sans Unicode';
         }
 
         #resultado-trump-harris {
@@ -13,6 +23,8 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            padding-bottom: 20px;
+            flex-direction: column;
         }
 
         #mapa-compromisarios {
@@ -66,69 +78,386 @@
         #divisoria-secundarios {
             margin: 0 1% 0 1%;
         }
+
+        #fecha-act {
+            color: #d6bdbd;
+            font-weight: bold;
+            margin-left: 111px;
+        }
+
+        /* Estilos generales para dispositivos móviles */
+@media (max-width: 768px) {
+    #grafico-principal {
+        height: auto;
+        padding: 10px;
+    }
+
+    #resultado-trump-harris {
+        height: auto;
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    /* Ajuste de los tamaños de fuente y espaciado para mejor legibilidad */
+    #fecha-act {
+        font-size: 14px;
+        margin-left: 0;
+    }
+
+    /* Ajustes en el tamaño de las secciones de mapas y gráficos */
+    #mapa-compromisarios {
+        height: auto;
+        padding: 20px 0;
+    }
+
+    #resultado-voto-popular {
+        margin: 20px;
+    }
+
+    /* Flexbox para apilar los mapas comparativos verticalmente */
+    #mapas-comparativos {
+        height: auto;
+    }
+
+    /* Ajuste de los contenedores secundarios */
+    .mapa-secundario {
+        width: 50%;  /* Reducimos el ancho para hacer espacio */
+        min-height: 200px;
+        padding: 5px;
+    }
+
+    /* Disminuye el espacio entre divisores */
+    #divisoria-secundarios {
+        margin: 0;
+    }
+    
+    /* Ajuste de las fuentes en etiquetas para legibilidad */
+    .mapa-secundario select, .mapa-secundario text {
+        font-size: 12px;
+    }
+
+    /* Ajusta las dimensiones de los SVGs */
+    .mapa {
+        width: 100%;
+        height: auto;
+    }
+}
     </style>
     <div id="grafico-principal">
         <div id="resultado-trump-harris">
             <object class="mapa" id="resultado-oficial-svg" type="image/svg+xml"
-                data="https://file.epdata.es/biblioteca/19/resultado-oficial.svg"></object>
+                data="img/resultado-oficial.svg"></object>
+
+            <div id="fecha-act">Última actualización: <span id="dato-act">FECHA</span></div>
+
+        </div>
+        <hr>
+        <div id="mapas">
+            <div id="mapa-compromisarios">
+                <object class="mapa" id="mapa-compromisarios-svg" type="image/svg+xml"
+                    data="img/mapa-eeuu.svg"></object>
+            </div>
+            <hr>
+
+            <div id="mapas-comparativos">
+                <div id="mapa-izq" class="mapa-secundario">
+                    <object class="mapa" type="image/svg+xml" data="img/mapa-izq.svg"></object>
+                </div>
+                <hr id="divisoria-secundarios">
+                <div id="mapa-dch" class="mapa-secundario">
+                    <object class="mapa" id="mapa-estados-svg" type="image/svg+xml" data="img/mapa-dch.svg"></object>
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+        <div id="resultado-voto-popular">
+            <object class="mapa" id="resultado-voto-popular-svg" type="image/svg+xml"
+                data="img/voto-popular.svg"></object>
         </div>
     </div>
+
     <script>
+        const colorTrump = "#ca1504"; // Rojo para Trump
+        const colorHarris = "#000e89"; // Azul para Harris
+
         async function actualizarGrafico() {
-    try {
-        const [metadatos, datos] = await Promise.all([
-            fetch('metadatos.json').then(response => response.json()),
-            fetch('https://static01-europapress-net.s3.eu-west-1.amazonaws.com/imagenes/estaticos/deportes/olimpiadas/medallero2024.json').then(response => response.json())
-        ]);
+            try {
+                const [metadatos, datos] = await Promise.all([
+                    fetch('metadatos.json').then(response => response.json()),
+                    fetch('https://static01-europapress-net.s3.eu-west-1.amazonaws.com/imagenes/estaticos/elecciones/eeuu/2024.json').then(response => response.json())
+                ]);
 
-        // Actualización del gráfico de barras de electores
-        const svgObject = document.getElementById('resultado-oficial-svg');
-        svgObject.addEventListener('load', function () {
-            const svgDoc = svgObject.contentDocument;
-            if (svgDoc) {
-                const votosTrump = parseInt(datos['total-electores'].Trump['resultado-2024']);
-                const votosHarris = parseInt(datos['total-electores'].Harris['resultado-2024']);
-                const totalVotos = 538;
+                // Guardamos los datos generales
+                const estados = metadatos.metadatos;
+                const fechaActualizacion = datos["actualizacion"];
+                document.querySelector('#dato-act').textContent = fechaActualizacion;
 
-                const longitudMaxima = 5060;
-                const proporcionTrump = (votosTrump / totalVotos) * longitudMaxima;
-                const proporcionHarris = (votosHarris / totalVotos) * longitudMaxima;
 
-                svgDoc.querySelector('#barra-2').setAttribute('width', proporcionHarris.toString());
-                svgDoc.querySelector('#barra').setAttribute('width', proporcionTrump.toString());
-                svgDoc.querySelector('#barra').setAttribute('x', (5294 - proporcionTrump).toString());
 
-                svgDoc.querySelector('#resultado-2024-trump').textContent = votosTrump;
-                svgDoc.querySelector('#resultado-2024-harris').textContent = votosHarris;
 
-                const variacionTrump = datos['total-electores'].Trump['variacion-24-20'];
-                const variacionHarris = datos['total-electores'].Harris['variacion-24-20'];
+                // Actualización del gráfico de barras de electores
+                const svgObject = document.getElementById('resultado-oficial-svg');
+                svgObject.addEventListener('load', function () {
+                    const svgDoc = svgObject.contentDocument;
+                    if (svgDoc) {
+                        const votosTrump = parseInt(datos['total-electores'].Trump['resultado-2024']);
+                        const votosHarris = parseInt(datos['total-electores'].Harris['resultado-2024']);
+                        const totalVotos = 538;
 
-                svgDoc.querySelector('#variacion-24-20-trump').textContent =
-                    (parseInt(variacionTrump) > 0 ? variacionTrump + '\u25B2+' : '\u25BC');
-                svgDoc.querySelector('#variacion-24-20-harris').textContent =
-                    (parseInt(variacionHarris) > 0 ? '\u25B2+' : '\u25BC') + variacionHarris;
+                        const longitudMaxima = 5060;
+                        const proporcionTrump = (votosTrump / totalVotos) * longitudMaxima;
+                        const proporcionHarris = (votosHarris / totalVotos) * longitudMaxima;
 
-                const votosSinAsignar = totalVotos - votosTrump - votosHarris;
-                const textoVotos = votosSinAsignar === 0
-                    ? `${totalVotos} VOTOS EN TOTAL`
-                    : `${totalVotos} VOTOS (${votosSinAsignar} SIN ASIGNAR)`;
+                        svgDoc.querySelector('#barra-2').setAttribute('width', proporcionHarris.toString());
+                        svgDoc.querySelector('#barra').setAttribute('width', proporcionTrump.toString());
+                        svgDoc.querySelector('#barra').setAttribute('x', (5294 - proporcionTrump).toString());
 
-                const etiquetaVotos = svgDoc.querySelector(".cls-8");
-                etiquetaVotos.textContent = textoVotos;
+                        svgDoc.querySelector('#resultado-2024-trump').textContent = votosTrump;
+                        svgDoc.querySelector('#resultado-2024-harris').textContent = votosHarris;
 
-                const currentX = parseFloat(etiquetaVotos.getAttribute("x")) || 0;
-                etiquetaVotos.setAttribute("x", currentX + 310);
+                        const variacionTrump = datos['total-electores'].Trump['variacion-24-20'];
+                        const variacionHarris = datos['total-electores'].Harris['variacion-24-20'];
+
+                        svgDoc.querySelector('#variacion-24-20-trump').textContent =
+                            (parseInt(variacionTrump) > 0 ? variacionTrump + '+\u25B2' : '\u25BC');
+                        svgDoc.querySelector('#variacion-24-20-harris').textContent =
+                            (parseInt(variacionHarris) > 0 ? '\u25B2+' : '\u25BC') + variacionHarris;
+
+                        const votosSinAsignar = totalVotos - votosTrump - votosHarris;
+                        const textoVotos = votosSinAsignar === 0
+                            ? `${totalVotos} VOTOS EN TOTAL`
+                            : `${totalVotos} VOTOS (${votosSinAsignar} SIN ASIGNAR)`;
+
+                        const etiquetaVotos = svgDoc.querySelector(".cls-8");
+                        etiquetaVotos.textContent = textoVotos;
+
+                        const currentX = parseFloat(etiquetaVotos.getAttribute("x")) || 0;
+                        etiquetaVotos.setAttribute("x", currentX + 310);
+                    }
+                });
+
+                // Actualización del color del mapa de compromisarios
+                const mapaCompromisarios = document.getElementById('mapa-compromisarios-svg');
+                mapaCompromisarios.addEventListener('load', function () {
+                    const svgMapaDoc = mapaCompromisarios.contentDocument;
+                    if (svgMapaDoc) {
+                        const rectangulosMap = {};
+                        // Acceso actualizado a la clave "metadatos"
+                        estados.forEach(meta => {
+                            rectangulosMap[meta.rectangulo] = meta.estado;
+                        });
+
+                        const ganadores = datos["ganador-estados"];
+                        const etiquetasGrupo = svgMapaDoc.getElementById('etiquetas');
+
+                        if (etiquetasGrupo) {
+                            for (const rectId in rectangulosMap) {
+                                const estado = rectangulosMap[rectId];
+                                const ganador = ganadores[estado];
+
+                                // Manejo especial para Maine y Nebraska
+                                if (estado === "Maine" || estado === "Nebraska") {
+                                    const rect1 = etiquetasGrupo.querySelector(`rect#rectangulo-${estado.toLowerCase()}-1`);
+                                    const rect2 = etiquetasGrupo.querySelector(`rect#rectangulo-${estado.toLowerCase()}-2`);
+                                    const etiqueta1 = etiquetasGrupo.querySelector(`text#etiqueta-${estado.toLowerCase()}-1`);
+                                    const etiqueta2 = etiquetasGrupo.querySelector(`text#etiqueta-${estado.toLowerCase()}-2`);
+
+                                    if (typeof ganador === "object") {
+                                        const votosTrump = parseInt(ganador.Trump) || 0;
+                                        const votosHarris = parseInt(ganador.Harris) || 0;
+
+                                        // Condición 1: Ambos votos son 0
+                                        if (votosTrump === 0 && votosHarris === 0) {
+                                            rect1.style.display = '';
+                                            rect2.style.display = 'none';
+                                            etiqueta1.style.display = '';
+                                            etiqueta2.style.display = 'none';
+                                        }
+                                        // Condición 2: Solo Harris tiene votos
+                                        else if (votosTrump === 0 && votosHarris > 0) {
+                                            rect1.setAttribute("fill", colorHarris);
+                                            rect1.style.display = '';
+                                            rect2.style.display = 'none';
+                                            etiqueta1.textContent = votosHarris;
+                                            etiqueta1.style.display = '';
+                                            etiqueta2.style.display = 'none';
+                                        }
+                                        // Condición 3: Solo Trump tiene votos
+                                        else if (votosHarris === 0 && votosTrump > 0) {
+                                            rect1.setAttribute("fill", colorTrump);
+                                            rect1.style.display = '';
+                                            rect2.style.display = 'none';
+                                            etiqueta1.textContent = votosTrump;
+                                            etiqueta1.style.display = '';
+                                            etiqueta2.style.display = 'none';
+                                        }
+                                        // Condición 4 y 5: Ambos tienen votos
+                                        else {
+                                            if (votosHarris >= votosTrump) {
+                                                rect1.setAttribute("fill", colorHarris);
+                                                rect2.setAttribute("fill", colorTrump);
+                                                etiqueta1.textContent = votosHarris;
+                                                etiqueta2.textContent = votosTrump;
+                                            } else {
+                                                rect1.setAttribute("fill", colorTrump);
+                                                rect2.setAttribute("fill", colorHarris);
+                                                etiqueta1.textContent = votosTrump;
+                                                etiqueta2.textContent = votosHarris;
+                                            }
+                                            rect1.style.display = '';
+                                            rect2.style.display = '';
+                                            etiqueta1.style.display = '';
+                                            etiqueta2.style.display = '';
+                                        }
+                                    }
+                                } else {
+                                    // Lógica estándar para otros estados con un solo rectángulo
+                                    const rect = etiquetasGrupo.querySelector(`rect#${rectId}`);
+                                    if (rect) {
+                                        rect.setAttribute("fill", ganador === "Trump" ? colorTrump : colorHarris);
+                                    } else {
+                                        console.warn(`Rectángulo con ID ${rectId} no encontrado en el grupo etiquetas.`);
+                                    }
+                                }
+                            }
+                        } else {
+                            console.error('Grupo de etiquetas no encontrado en el SVG.');
+                        }
+                    } else {
+                        console.error('No se pudo cargar el contenido del documento SVG de mapa de compromisarios.');
+                    }
+                });
+
+                // Nueva función para actualizar el color del mapa derecho
+                const actualizarMapaDerecho = () => {
+                    const mapaEstados = document.getElementById('mapa-estados-svg');
+                    mapaEstados.addEventListener('load', function () {
+                        const svgEstadosDoc = mapaEstados.contentDocument;
+                        if (svgEstadosDoc) {
+                            const ganadores = datos["ganador-estados"];
+
+                            for (const estado in ganadores) {
+                                const ganador = ganadores[estado];
+                                const estadoID = estado.replace(/ /g, '_');
+                                const estadoElemento = svgEstadosDoc.getElementById(estadoID);
+
+                                if (estadoElemento) {
+                                    estadoElemento.classList.remove("cls-3");
+
+                                    if (estado === "Maine" && typeof ganador === 'object') {
+                                        const votosTrump = parseInt(ganador.Trump) || 0;
+                                        const votosHarris = parseInt(ganador.Harris) || 0;
+
+                                        // Comprobamos si hay empate en Maine
+                                        if (votosTrump === votosHarris && votosTrump === 2) {
+                                            estadoElemento.classList.add("cls-empate");
+                                        } else {
+                                            // Aplicamos clase de color según el ganador
+                                            estadoElemento.classList.add(votosTrump >= votosHarris ? "cls-trump" : "cls-harris");
+                                        }
+                                    } else {
+                                        // Lógica estándar para otros estados
+                                        estadoElemento.classList.add(ganador === "Trump" ? "cls-trump" : "cls-harris");
+                                    }
+                                } else {
+                                    console.warn(`Estado con ID ${estadoID} no encontrado en el SVG del mapa derecho.`);
+                                }
+                            }
+                        } else {
+                            console.error('No se pudo cargar el contenido del SVG del mapa derecho.');
+                        }
+                    });
+                };
+
+
+
+                // Llamada a la función para actualizar el mapa derecho
+                actualizarMapaDerecho();
+
+                // Actualización de barras del voto popular
+                const votoPopularSVG = document.getElementById('resultado-voto-popular-svg');
+                votoPopularSVG.addEventListener('load', function () {
+                    const svgVotoDoc = votoPopularSVG.contentDocument;
+                    if (svgVotoDoc) {
+                        const maxVotos = 100000000; // Escala máxima para las barras
+                        const votosTrump = parseInt(datos['voto-popular'].Trump['resultado-2024']);
+                        const votosHarris = parseInt(datos['voto-popular'].Harris['resultado-2024']);
+
+                        // Cálculo del ancho de las barras de voto popular en función de los votos
+                        const proporcionTrump = (votosTrump / maxVotos) * 5060;
+                        const proporcionHarris = (votosHarris / maxVotos) * 5060;
+
+                        // Actualizamos el ancho de las barras
+                        const barraTrump = svgVotoDoc.querySelector('#barra-popular-trump');
+                        const barraHarris = svgVotoDoc.querySelector('#barra-popular-harris');
+
+                        barraTrump.setAttribute('width', Math.max(proporcionTrump, 0).toString());
+                        barraHarris.setAttribute('width', Math.max(proporcionHarris, 0).toString());
+
+                        // Actualizamos los textos con los votos populares
+                        const etiquetaTrump = svgVotoDoc.querySelector('#etiqueta-voto-pop-trump');
+                        const etiquetaHarris = svgVotoDoc.querySelector('#etiqueta-voto-pop-harris');
+
+                        // Posición de etiquetas de votos populares, 20 puntos a la derecha del extremo derecho de cada barra
+                        etiquetaTrump.textContent = votosTrump.toLocaleString();
+                        etiquetaTrump.setAttribute("x", (parseFloat(barraTrump.getAttribute("x")) + proporcionTrump + 10).toString());
+
+                        etiquetaHarris.textContent = votosHarris.toLocaleString();
+                        etiquetaHarris.setAttribute("x", (parseFloat(barraHarris.getAttribute("x")) + proporcionHarris + 10).toString());
+
+                        // Actualización de las variaciones de voto popular con formato de miles
+                        const variacionTrumpPopular = parseInt(datos['voto-popular'].Trump['variacion-24-20']).toLocaleString();
+                        const variacionHarrisPopular = parseInt(datos['voto-popular'].Harris['variacion-24-20']).toLocaleString();
+
+                        const etiquetaVariacionTrump = svgVotoDoc.querySelector('#etiqueta-variacion-voto-pop-trump');
+                        const etiquetaVariacionHarris = svgVotoDoc.querySelector('#etiqueta-variacion-voto-pop-harris');
+
+                        // Posición de etiquetas de variación de votos, 20 puntos a la derecha de las etiquetas de voto popular
+                        etiquetaVariacionTrump.textContent =
+                            (parseInt(variacionTrumpPopular.replace(/[.,]/g, '')) > 0 ? `\u25B2+${variacionTrumpPopular}` : `\u25BC${variacionTrumpPopular}`);
+                        etiquetaVariacionTrump.setAttribute("x", (parseFloat(etiquetaTrump.getAttribute("x")) + etiquetaTrump.getBBox().width + 20).toString());
+
+                        etiquetaVariacionHarris.textContent =
+                            (parseInt(variacionHarrisPopular.replace(/[.,]/g, '')) > 0 ? `\u25B2+${variacionHarrisPopular}` : `\u25BC${variacionHarrisPopular}`);
+                        etiquetaVariacionHarris.setAttribute("x", (parseFloat(etiquetaHarris.getAttribute("x")) + etiquetaHarris.getBBox().width + 20).toString());
+                    } else {
+                        console.error('No se pudo cargar el contenido del SVG de voto popular.');
+                    }
+                });
+
+            } catch (error) {
+                console.error('Error al cargar los JSON o el SVG:', error);
             }
-        });
-    } catch (error) {
-        console.error('Error al cargar los JSON o el SVG:', error);
-    }
-}
+        }
 
-document.addEventListener("DOMContentLoaded", () => {
-    actualizarGrafico();
-});
+        function actualizarBarrasElectores(svgDoc, datos) {
+            if (!svgDoc) return;
+        }
 
-        
+        function actualizarMapaCompromisarios(svgDoc, estados, datos) {
+            if (!svgDoc) return;
+        }
+
+        function actualizarMapaDerecho(svgDoc, datos) {
+            if (!svgDoc) return;
+        }
+
+        function actualizarVotoPopular(svgDoc, datos) {
+            if (!svgDoc) return;
+        }
+
+        document.addEventListener("DOMContentLoaded", actualizarGrafico);
+
     </script>
+
+
+
+
+
+
+
+</body>
+
+</html>
