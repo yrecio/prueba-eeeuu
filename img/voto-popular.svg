@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 5674.6 883.5">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3 {
+        fill: #ca1504;
+      }
+
+      .cls-1, .cls-3, .cls-4, .cls-5 {
+        font-family: ArialMT, Arial;
+      }
+
+      .cls-1, .cls-4 {
+        font-size: 130px;
+      }
+
+      .cls-2, .cls-6, .cls-7 {
+        isolation: isolate;
+      }
+
+      .cls-2, .cls-7 {
+        font-family: Arial-BoldMT, Arial;
+        font-size: 117px;
+        font-weight: 700;
+      }
+
+      .cls-3, .cls-5 {
+        font-size: 112px;
+      }
+
+      .cls-4, .cls-5, .cls-7 {
+        fill: #000e89;
+      }
+
+      .cls-8 {
+        fill: url(#Degradado_sin_nombre);
+      }
+
+      .cls-8, .cls-9 {
+        stroke-width: 0px;
+      }
+
+      .cls-9 {
+        fill: url(#Degradado_sin_nombre_2);
+      }
+    </style>
+    <linearGradient id="Degradado_sin_nombre" data-name="Degradado sin nombre" x1="248.4" y1="-235.6" x2="4648.4" y2="-235.6" gradientTransform="translate(0 478) scale(1 -1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#951003"/>
+      <stop offset=".2" stop-color="#ca1504"/>
+    </linearGradient>
+    <linearGradient id="Degradado_sin_nombre_2" data-name="Degradado sin nombre 2" x1="248.9" y1="181" x2="4648.9" y2="181" gradientTransform="translate(0 478) scale(1 -1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#000853"/>
+      <stop offset=".3" stop-color="#000e89"/>
+    </linearGradient>
+  </defs>
+  <rect id="barra-popular-trump" class="cls-8" x="248.4" y="622" width="4400" height="183.2"/>
+  <rect id="barra-popular-harris" class="cls-9" x="248.9" y="205.4" width="4400" height="183.2"/>
+  <g class="cls-6">
+    <g class="cls-6">
+      <g class="cls-6">
+        <text class="cls-2" transform="translate(449.6 577.3)"><tspan x="0" y="0">TRUMP</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g id="escaños">
+    <g class="cls-6">
+      <g class="cls-6">
+        <g>
+          <text id="etiqueta-voto-pop-trump" class="cls-1" transform="translate(100 767.3)"><tspan x="0" y="0"></tspan></text>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g class="cls-6">
+    <g class="cls-6">
+      <g class="cls-6">
+        <text class="cls-7" transform="translate(449.6 174.5)"><tspan x="0" y="0">HARRIS</tspan></text>
+      </g>
+    </g>
+  </g>
+  <g id="escaños-2" class="cls-6">
+    <g class="cls-6">
+      <g>
+        <text id="etiqueta-voto-pop-harris" class="cls-4" transform="translate(100 332.3)"><tspan x="0" y="0"></tspan></text>
+      </g>
+    </g>
+  </g>
+  <g id="variacion" class="cls-6">
+    <g class="cls-6">
+      <g >
+        <text class="cls-5" id="etiqueta-variacion-voto-pop-harris" transform="translate(100 332.3)"><tspan x="0" y="0"></tspan></text>
+      </g>
+    </g>
+  </g>
+  <g id="variacion-2">
+    <g class="cls-6">
+      <g class="cls-6">
+        <g>
+          <text class="cls-3" id="etiqueta-variacion-voto-pop-trump" transform="translate(100 767.3)"><tspan x="0" y="0"></tspan></text>
+        </g>
+      </g>
+    </g>
+  </g>
+  <image class="cls-6" width="900" height="900" transform="translate(75.6 85.2) scale(.4)" xlink:href="img/harris-circulo-vpopular.png"/>
+  <image class="cls-6" width="900" height="900" transform="translate(75.6 494) scale(.4)" xlink:href="img/trump-circulo-vpopular.png"/>
+</svg>

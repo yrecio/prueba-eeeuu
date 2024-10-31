@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 5583 741">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke-width: 0px;
+      }
+
+      .cls-1, .cls-5 {
+        fill: #000;
+      }
+
+      .cls-6, .cls-7, .cls-8, .cls-9, .cls-5 {
+        isolation: isolate;
+      }
+
+      .cls-2 {
+        fill: #b2b2b2;
+      }
+
+      .cls-7, .cls-3 {
+        fill: #000e89;
+      }
+
+      .cls-7, .cls-10, .cls-9, .cls-11, .cls-5 {
+        font-family: ArialMT, Arial;
+      }
+
+      .cls-7, .cls-9 {
+        font-size: 137.4px;
+      }
+
+      .cls-10 {
+        font-size: 111px;
+      }
+
+      .cls-10, .cls-11 {
+        fill: #fff;
+      }
+
+      .cls-8 {
+        fill: #b7b7b7;
+        font-family: Arial-Black, Arial;
+        font-size: 91px;
+        font-weight: 800;
+      }
+
+      .cls-9, .cls-4 {
+        fill: #ca1504;
+      }
+
+      .cls-11 {
+        font-size: 202.2px;
+      }
+
+      .cls-5 {
+        font-size: 91.7px;
+      }
+    </style>
+  </defs>
+  <rect id="sin-asignar" class="cls-2" x="282.8" y="290.8" width="5032.5" height="295.6"/>
+  <rect id="barra" class="cls-4" x="2806.8" y="291.3" width="0" height="295.6"/>
+  <rect id="barra-2" class="cls-3" x="282.6" y="291.1" width="0" height="295.6"/>
+  <g id="linea-discontinua">
+    <rect class="cls-1" x="2805.1" y="228.8" width="7.5" height="8.2"/>
+    <path class="cls-1" d="M2812.6,575.8h-7.5v-16.9h7.5v16.9ZM2812.6,541.9h-7.5v-16.9h7.5v16.9ZM2812.6,508h-7.5v-16.9h7.5v16.9ZM2812.6,474.1h-7.5v-16.9h7.5v16.9ZM2812.6,440.3h-7.5v-16.9h7.5v16.9ZM2812.6,406.4h-7.5v-16.9h7.5v16.9ZM2812.6,372.5h-7.5v-16.9h7.5v16.9ZM2812.6,338.6h-7.5v-16.9h7.5v16.9ZM2812.6,304.7h-7.5v-16.9h7.5v16.9ZM2812.6,270.9h-7.5v-16.9h7.5v16.9Z"/>
+  </g>
+  <g class="cls-6">
+    <g class="cls-6">
+      <text class="cls-5" transform="translate(2405.5 187.3)"><tspan x="0" y="0">MAYORÍA: 270 VOTOS</tspan></text>
+    </g>
+  </g>
+  <g>
+    <g class="cls-6">
+      <g class="cls-6">
+        <text class="cls-9" transform="translate(4550 264.9)"><tspan x="0" y="0">TRUMP</tspan></text>
+      </g>
+    </g>
+    <g id="escaños" class="cls-6">
+      <g>
+        <text id="resultado-2024-trump" class="cls-11" transform="translate(4676.8 519.5)"><tspan x="0" y="0"></tspan></text>
+      </g>
+    </g>
+    <g id="variacion">
+      <g class="cls-6">
+        <g>
+          <text id="variacion-24-20-trump" class="cls-10" transform="translate(4341.4 495.8)"><tspan x="0" y="0"></tspan></text>
+        </g>
+      </g>
+    </g>
+    <image width="900" height="892" transform="translate(5058.5 150.2) scale(.5)" xlink:href="https://file.epdata.es/biblioteca/18/trump-circulo-velectoral.png"/>
+  </g>
+  <g>
+    <image width="900" height="892" transform="translate(46.7 148) scale(.5)" xlink:href="https://file.epdata.es/biblioteca/18/harris-circulo-velectoral.png"/>
+    <g class="cls-6">
+      <g class="cls-6">
+        <text class="cls-7" transform="translate(525.4 269.9)"><tspan x="0" y="0">HARRIS</tspan></text>
+      </g>
+    </g>
+    <g id="escaños-2" class="cls-6">
+      <g>
+        <text id="resultado-2024-harris" class="cls-11" transform="translate(554.5 518.4)"><tspan x="0" y="0"></tspan></text>
+      </g>
+    </g>
+    <g id="variacion-2">
+      <g class="cls-6">
+        <g>
+          <text id="variacion-24-20-harris" class="cls-10" transform="translate(946.8 494.7)"><tspan x="0" y="0"></tspan></text>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g class="cls-6">
+    <g class="cls-6">
+      <text class="cls-8" transform="translate(2036.5 705.3)"><tspan x="0" y="0">538 VOTOS (230 SIN ASIGNAR)</tspan></text>
+    </g>
+  </g>
+</svg>

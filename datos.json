@@ -1,0 +1,82 @@
+{
+    "actualizacion": "5 nov. 23:00h",
+    "total-electores": {
+        "Harris": {
+            "resultado-2024": "100",
+            "variacion-24-20": "-206"
+        },
+        "Trump": {
+            "resultado-2024": "240",
+            "variacion-24-20": "8"
+        }
+    },
+    "ganador-estados": {
+        "Alabama": "Trump",
+        "Alaska": "Trump",
+        "Arizona": "Trump",
+        "Arkansas": "Trump",
+        "California": "Harris",
+        "Colorado": "Harris",
+        "Connecticut": "Harris",
+        "Delaware": "Harris",
+        "Washington DC": "Trump",
+        "Florida": "Harris",
+        "Georgia": "Harris",
+        "Hawaii": "Harris",
+        "Idaho": "Harris",
+        "Illinois": "Harris",
+        "Indiana": "Harris",
+        "Iowa": "Trump",
+        "Kansas": "Trump",
+        "Kentucky": "Trump",
+        "Louisiana": "Trump",
+        "Maine": {
+            "Trump": "2",
+            "Harris": "4"
+        },
+        "Maryland": "Harris",
+        "Massachusetts": "Harris",
+        "Michigan": "Harris",
+        "Minnesota": "Harris",
+        "Mississippi": "Trump",
+        "Missouri": "Trump",
+        "Montana": "Trump",
+        "Nebraska": {
+            "Trump": "2",
+            "Harris": "4"
+        },
+        "Nevada": "Trump",
+        "Nuevo Hampshire": "Trump",
+        "Nueva Jersey": "Trump",
+        "Nuevo México": "Harris",
+        "Nueva York": "Harris",
+        "Carolina del Norte": "Harris",
+        "Dakota del Norte": "Harris",
+        "Ohio": "Harris",
+        "Oklahoma": "Trump",
+        "Oregón": "Trump",
+        "Pensilvania": "Harris",
+        "Rhode Island": "Harris",
+        "Carolina del Sur": "Trump",
+        "Dakota del Sur": "Trump",
+        "Tennessee": "Trump",
+        "Texas": "Trump",
+        "Utah": "Harris",
+        "Vermont": "Harris",
+        "Virginia": "Harris",
+        "Washington": "Harris",
+        "Virginia Occidental": "Harris",
+        "Wisconsin": "Harris",
+        "Wyoming": "Harris"
+    },
+    "voto-popular": {
+        "Harris": {
+            "resultado-2024": "11160200",
+            "variacion-24-20": "50"
+        },
+        "Trump": {
+            "resultado-2024": "11160200",
+            "variacion-24-20": "-50"
+        }
+    }
+}
